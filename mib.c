@@ -39,23 +39,26 @@
  * OID will need encoded in SNMP packets (including the BER type and length fields).
  */
 
-static const oid_t m_system_oid         = { { 1, 3, 6, 1, 2, 1, 1               },  7, 8  };
-static const oid_t m_if_1_oid           = { { 1, 3, 6, 1, 2, 1, 2               },  7, 8  };
-static const oid_t m_if_2_oid           = { { 1, 3, 6, 1, 2, 1, 2, 2, 1         },  9, 10 };
-static const oid_t m_ip_oid             = { { 1, 3, 6, 1, 2, 1, 4               },  7, 8  };
-static const oid_t m_tcp_oid            = { { 1, 3, 6, 1, 2, 1, 6               },  7, 8  };
-static const oid_t m_udp_oid            = { { 1, 3, 6, 1, 2, 1, 7               },  7, 8  };
-static const oid_t m_host_oid           = { { 1, 3, 6, 1, 2, 1, 25, 1           },  8, 9  };
-static const oid_t m_ifxtable_oid       = { { 1, 3, 6, 1, 2, 1, 31, 1, 1, 1     }, 10, 11 };
-static const oid_t m_memory_oid         = { { 1, 3, 6, 1, 4, 1, 2021, 4,        },  8, 10 };
-static const oid_t m_disk_oid           = { { 1, 3, 6, 1, 4, 1, 2021, 9, 1      },  9, 11 };
-static const oid_t m_load_oid           = { { 1, 3, 6, 1, 4, 1, 2021, 10, 1     },  9, 11 };
-static const oid_t m_cpu_oid            = { { 1, 3, 6, 1, 4, 1, 2021, 11        },  8, 10 };
-#ifdef CONFIG_ENABLE_DEMO
-static const oid_t m_demo_oid           = { { 1, 3, 6, 1, 4, 1, 99999           },  7, 10 };
-#endif
+/**//*static const oid_t m_system_oid         = { { 1, 3, 6, 1, 2, 1, 1               },  7, 8  };
+/**///static const oid_t m_if_1_oid           = { { 1, 3, 6, 1, 2, 1, 2               },  7, 8  };
+/**///static const oid_t m_if_2_oid           = { { 1, 3, 6, 1, 2, 1, 2, 2, 1         },  9, 10 };
+/**///static const oid_t m_ip_oid             = { { 1, 3, 6, 1, 2, 1, 4               },  7, 8  };
+/**///static const oid_t m_tcp_oid            = { { 1, 3, 6, 1, 2, 1, 6               },  7, 8  };
+/**///static const oid_t m_udp_oid            = { { 1, 3, 6, 1, 2, 1, 7               },  7, 8  };
+/**///static const oid_t m_host_oid           = { { 1, 3, 6, 1, 2, 1, 25, 1           },  8, 9  };
+/**///static const oid_t m_ifxtable_oid       = { { 1, 3, 6, 1, 2, 1, 31, 1, 1, 1     }, 10, 11 };
+/**///static const oid_t m_memory_oid         = { { 1, 3, 6, 1, 4, 1, 2021, 4,        },  8, 10 };
+/**///static const oid_t m_disk_oid           = { { 1, 3, 6, 1, 4, 1, 2021, 9, 1      },  9, 11 };
+/**///static const oid_t m_load_oid           = { { 1, 3, 6, 1, 4, 1, 2021, 10, 1     },  9, 11 };
+/**///static const oid_t m_cpu_oid            = { { 1, 3, 6, 1, 4, 1, 2021, 11        },  8, 10 };
+/**///#ifdef CONFIG_ENABLE_DEMO
+static const oid_t m_demo_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0           },  10, 12 };
+static const oid_t m_democpu_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0, 1           },  11, 13 };
+static const oid_t m_demofan_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0, 2           },  11, 13 };
 
-static const int m_load_avg_times[3] = { 1, 5, 15 };
+/**///#endif
+
+/**///static const int m_load_avg_times[3] = { 1, 5, 15 };
 
 static int oid_build  (oid_t *oid, const oid_t *prefix, int column, int row);
 static int encode_oid_len (oid_t *oid);
@@ -277,14 +280,14 @@ static int encode_unsigned64(data_t *data, int type, uint64_t ticks_value)
 	return 0;
 }
 
-static int mib_build_ip_entry(const oid_t *prefix, int type, const void *arg)
+/**//*static int mib_build_ip_entry(const oid_t *prefix, int type, const void *arg)
 {
 	int ret;
 	value_t *value;
 	const char *msg = "Failed creating MIB entry";
 	const char *msg2 = "Failed assigning value to OID";
 
-	/* Create a new entry in the MIB table */
+	// Create a new entry in the MIB table 
 	if (g_mib_length >= MAX_NR_VALUES) {
 		logit(LOG_ERR, 0, "%s '%s': table overflow", msg, oid_ntoa(prefix));
 		return -1;
@@ -312,7 +315,8 @@ static int mib_build_ip_entry(const oid_t *prefix, int type, const void *arg)
 	}
 
 	return 0;
-}
+}*/
+
 
 static value_t *mib_alloc_entry(const oid_t *prefix, int column, int row, int type)
 {
@@ -559,7 +563,7 @@ static int data_set(data_t *data, int type, const void *arg)
 	return 1;
 }
 
-struct in_sort {
+/*!!*//*struct in_sort {
 	int pos;
 	unsigned int addr;
 } sorted_interface_list[MAX_NR_INTERFACES];
@@ -582,9 +586,10 @@ void sort_addr(netinfo_t *netinfo)
 	}
 
 	qsort(sorted_interface_list, g_interface_list_length, sizeof(struct in_sort), in_cmp);
-}
+}*/
 
-static int build_ip_mib(oid_t *oid, int type, unsigned int in_addr[], unsigned int value[])
+
+/**//*static int build_ip_mib(oid_t *oid, int type, unsigned int in_addr[], unsigned int value[])
 {
 	size_t i;
 
@@ -593,7 +598,7 @@ static int build_ip_mib(oid_t *oid, int type, unsigned int in_addr[], unsigned i
 		int pos;
 		int j;
 
-		/* Find position in in_addr[] and value[] */
+		// Find position in in_addr[] and value[] 
 		pos = sorted_interface_list[i].pos;
 
 		if (!in_addr[pos])
@@ -608,7 +613,8 @@ static int build_ip_mib(oid_t *oid, int type, unsigned int in_addr[], unsigned i
 	}
 
 	return 0;
-}
+}*/
+
 
 static int build_int(const oid_t *oid, int col, int row, unsigned int val)
 {
@@ -738,7 +744,7 @@ static int update_c64(const oid_t *oid, int col, int row, size_t *pos, long long
  * and OID.
  *
  * Note that the maximum number of MIB variables is restricted by the length of
- * the MIB array, (see riksnmp.h for the value of MAX_NR_VALUES).
+ * the MIB array, (see mini-snmpd.h for the value of MAX_NR_VALUES).
  */
 
 int mib_build(void)
@@ -767,72 +773,72 @@ int mib_build(void)
 	 * The system MIB: basic info about the host (SNMPv2-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (mib_build_entry(&m_system_oid, 1, 0, BER_TYPE_OCTET_STRING, g_description) == -1 ||
+	/**//*if (mib_build_entry(&m_system_oid, 1, 0, BER_TYPE_OCTET_STRING, g_description) == -1 ||
 	    mib_build_entry(&m_system_oid, 2, 0, BER_TYPE_OID,          g_vendor)      == -1 ||
 	    !mib_alloc_entry(&m_system_oid, 3, 0, BER_TYPE_TIME_TICKS)                        ||
 	    mib_build_entry(&m_system_oid, 4, 0, BER_TYPE_OCTET_STRING, g_contact)     == -1 ||
 	    mib_build_entry(&m_system_oid, 5, 0, BER_TYPE_OCTET_STRING, hostname)      == -1 ||
 	    mib_build_entry(&m_system_oid, 6, 0, BER_TYPE_OCTET_STRING, g_location)    == -1 ||
 	    mib_build_entry(&m_system_oid, 7, 0, BER_TYPE_INTEGER, (const void *)(intptr_t)sysServices) == -1)
-		return -1;
+		return -1;*/
 
 	/*
 	 * The interface MIB: network interfaces (IF-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (g_interface_list_length > 0) {
+	/**//*if (g_interface_list_length > 0) {
 		if (build_int(&m_if_1_oid, 1, 0, g_interface_list_length) == -1)
 			return -1;
 
-		/* ifIndex */
+		// ifIndex 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_int(&m_if_2_oid, 1, i + 1, netinfo.ifindex[i]) == -1)
 				return -1;
 		}
 
-		/* ifDescription */
+		// ifDescription
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_str(&m_if_2_oid, 2, i + 1, g_interface_list[i]) == -1)
 				return -1;
 		}
 
-		/* ifType: ENUM, ethernetCsmacd(6) <-- recommended for all types of Ethernets */
+		// ifType: ENUM, ethernetCsmacd(6) <-- recommended for all types of Ethernets 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_int(&m_if_2_oid, 3, i + 1, 6) == -1)
 				return -1;
 		}
 
-		/* ifMtu */
+		// ifMtu 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_int(&m_if_2_oid, 4, i + 1, 1500) == -1)
 				return -1;
 		}
 
-		/* ifSpeed (in bps) */
+		// ifSpeed (in bps) 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_gge(&m_if_2_oid, 5, i + 1, 1000000000) == -1)
 				return -1;
 		}
 
-		/* ifPhysAddress */
+		// ifPhysAddress 
 		for (i = 1; i <= g_interface_list_length; i++) {
 			if (build_str(&m_if_2_oid, 6, i, "") == -1)
 				return -1;
 		}
 
-		/* ifAdminStatus: up(1), down(2), testing(3) */
+		// ifAdminStatus: up(1), down(2), testing(3) 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_int(&m_if_2_oid, 7, i + 1, 1) == -1)
 				return -1;
 		}
 
-		/* ifOperStatus: up(1), down(2), testing(3), unknown(4), dormant(5), notPresent(6), lowerLayerDown(7) */
+		// ifOperStatus: up(1), down(2), testing(3), unknown(4), dormant(5), notPresent(6), lowerLayerDown(7) 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_int(&m_if_2_oid, 8, i + 1, 1) == -1)
 				return -1;
 		}
 
-		/* ifLastChange */
+		// ifLastChange 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_tm(&m_if_2_oid, 9, i + 1, 0) == -1)
 				return -1;
@@ -852,7 +858,7 @@ int mib_build(void)
 	/*
 	 * The IP-MIB.
 	 */
-	if (!mib_alloc_entry(&m_ip_oid,  1, 0, BER_TYPE_INTEGER) ||
+	/**//*if (!mib_alloc_entry(&m_ip_oid,  1, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_ip_oid,  2, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_ip_oid, 13, 0, BER_TYPE_INTEGER) )
 		return -1;
@@ -869,12 +875,13 @@ int mib_build(void)
 		build_ip_mib(&m_ip_adentryifidx_oid,  BER_TYPE_INTEGER,    netinfo.in_addr, netinfo.ifindex);
 		build_ip_mib(&m_ip_adentrymask_oid,   BER_TYPE_IP_ADDRESS, netinfo.in_addr, netinfo.in_mask);
 		build_ip_mib(&m_ip_adentrybcaddr_oid, BER_TYPE_INTEGER,    netinfo.in_addr, netinfo.in_bcent);
-	}
+	}*/
+
 
 	/*
 	 * The TCP-MIB.
 	 */
-	if (!mib_alloc_entry(&m_tcp_oid,  1, 0, BER_TYPE_INTEGER) ||
+	/**//*if (!mib_alloc_entry(&m_tcp_oid,  1, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_tcp_oid,  2, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_tcp_oid,  3, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_tcp_oid,  4, 0, BER_TYPE_INTEGER) ||
@@ -888,40 +895,41 @@ int mib_build(void)
 	    !mib_alloc_entry(&m_tcp_oid, 12, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_tcp_oid, 14, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_tcp_oid, 15, 0, BER_TYPE_COUNTER))
-		return -1;
+		return -1;*/
 
 	/*
 	 * The UDP-MIB.
 	 */
-	if (!mib_alloc_entry(&m_udp_oid,  1, 0, BER_TYPE_COUNTER)   ||
+	/**//*if (!mib_alloc_entry(&m_udp_oid,  1, 0, BER_TYPE_COUNTER)   ||
 	    !mib_alloc_entry(&m_udp_oid,  2, 0, BER_TYPE_COUNTER)   ||
 	    !mib_alloc_entry(&m_udp_oid,  3, 0, BER_TYPE_COUNTER)   ||
 	    !mib_alloc_entry(&m_udp_oid,  4, 0, BER_TYPE_COUNTER)   ||
 	    !mib_alloc_entry(&m_udp_oid,  8, 0, BER_TYPE_COUNTER64) ||
 	    !mib_alloc_entry(&m_udp_oid,  9, 0, BER_TYPE_COUNTER64)) {
 		return -1;
-	}
+	}*/
+
 
 	/*
 	 * The host MIB: additional host info (HOST-RESOURCES-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (!mib_alloc_entry(&m_host_oid, 1, 0, BER_TYPE_TIME_TICKS))
-		return -1;
+	/**//*if (!mib_alloc_entry(&m_host_oid, 1, 0, BER_TYPE_TIME_TICKS))
+		return -1;*/
 
 	/*
 	 * IF-MIB continuation
 	 * ifXTable
 	 */
-	if (g_interface_list_length > 0) {
+	/**//*if (g_interface_list_length > 0) {
 
-		/* ifName */
+		// ifName 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_str(&m_ifxtable_oid, 1, i + 1, g_interface_list[i]) == -1)
 				return -1;
 		}
 
-		/* Counters */
+		// Counters 
 		if (mib_build_entries(&m_ifxtable_oid,  2, 1, g_interface_list_length, BER_TYPE_COUNTER)   == -1 ||
 		    mib_build_entries(&m_ifxtable_oid,  3, 1, g_interface_list_length, BER_TYPE_COUNTER)   == -1 ||
 		    mib_build_entries(&m_ifxtable_oid,  4, 1, g_interface_list_length, BER_TYPE_COUNTER)   == -1 ||
@@ -936,59 +944,60 @@ int mib_build(void)
 		    mib_build_entries(&m_ifxtable_oid, 13, 1, g_interface_list_length, BER_TYPE_COUNTER64) == -1)
 			return -1;
 
-		/* ifLinkUpDownTrapEnable */
+		// ifLinkUpDownTrapEnable 
 		for (i = 0; i < g_interface_list_length; i++) {
-			if (build_int(&m_ifxtable_oid, 14, i + 1, 2 /* disabled */) == -1)
+			if (build_int(&m_ifxtable_oid, 14, i + 1, 2 ) == -1) // disabled
 				return -1;
 		}
 
-		/* ifHighSpeed */
+		// ifHighSpeed 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_gge(&m_ifxtable_oid, 15, i + 1, 0) == -1)
 				return -1;
 		}
 
-		/* ifPromiscuousMode */
+		// ifPromiscuousMode 
 		for (i = 0; i < g_interface_list_length; i++) {
-			if (build_int(&m_ifxtable_oid, 16, i + 1, 2 /* false */) == -1)
+			if (build_int(&m_ifxtable_oid, 16, i + 1, 2 ) == -1) // false
 				return -1;
 		}
 
-		/* ifConnectorPresent */
+		// ifConnectorPresent 
 		for (i = 0; i < g_interface_list_length; i++) {
-			if (build_int(&m_ifxtable_oid, 17, i + 1, 1 /* true */) == -1)
+			if (build_int(&m_ifxtable_oid, 17, i + 1, 1 ) == -1) // true 
 				return -1;
 		}
 
-		/* ifAlias */
+		// ifAlias 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_str(&m_ifxtable_oid, 18, i + 1, g_interface_list[i]) == -1)
 				return -1;
 		}
 
-		/* ifCounterDiscontinuityTime */
+		// ifCounterDiscontinuityTime 
 		for (i = 0; i < g_interface_list_length; i++) {
 			if (build_tm(&m_ifxtable_oid, 19, i + 1, 0) == -1)
 				return -1;
 		}
-	}
+	}*/
+
 
 	/*
 	 * The memory MIB: total/free memory (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (!mib_alloc_entry(&m_memory_oid,  5, 0, BER_TYPE_INTEGER) ||
+	/**//*if (!mib_alloc_entry(&m_memory_oid,  5, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_memory_oid,  6, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_memory_oid, 13, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_memory_oid, 14, 0, BER_TYPE_INTEGER) ||
 	    !mib_alloc_entry(&m_memory_oid, 15, 0, BER_TYPE_INTEGER))
-		return -1;
+		return -1;*/
 
 	/*
 	 * The disk MIB: mounted partitions (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (g_disk_list_length > 0) {
+	/**//*if (g_disk_list_length > 0) {
 		for (i = 0; i < g_disk_list_length; i++) {
 			if (build_int(&m_disk_oid, 1, i + 1, i + 1) == -1)
 				return -1;
@@ -1005,13 +1014,14 @@ int mib_build(void)
 		    mib_build_entries(&m_disk_oid,  9, 1, g_disk_list_length, BER_TYPE_INTEGER) == -1 ||
 		    mib_build_entries(&m_disk_oid, 10, 1, g_disk_list_length, BER_TYPE_INTEGER) == -1)
 			return -1;
-	}
+	}*/
+
 
 	/*
 	 * The load MIB: CPU load averages (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	for (i = 0; i < 3; i++) {
+	/**//*for (i = 0; i < 3; i++) {
 		if (build_int(&m_load_oid, 1, i + 1, i + 1) == -1)
 			return -1;
 	}
@@ -1032,27 +1042,42 @@ int mib_build(void)
 	}
 
 	if (mib_build_entries(&m_load_oid, 5, 1, 3, BER_TYPE_INTEGER) == -1)
-		return -1;
+		return -1;*/
 
 	/* The CPU MIB: CPU statistics (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	if (!mib_alloc_entry(&m_cpu_oid, 50, 0, BER_TYPE_COUNTER) ||
+	/**//*if (!mib_alloc_entry(&m_cpu_oid, 50, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_cpu_oid, 51, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_cpu_oid, 52, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_cpu_oid, 53, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_cpu_oid, 59, 0, BER_TYPE_COUNTER) ||
 	    !mib_alloc_entry(&m_cpu_oid, 60, 0, BER_TYPE_COUNTER))
-		return -1;
+		return -1;*/
 
 	/* The demo MIB: two random integers
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-#ifdef CONFIG_ENABLE_DEMO
-	if (!mib_alloc_entry(&m_demo_oid, 1, 0, BER_TYPE_INTEGER) ||
-	    !mib_alloc_entry(&m_demo_oid, 2, 0, BER_TYPE_INTEGER))
-		return -1;
-#endif
+/**///#ifdef CONFIG_ENABLE_DEMO
+	for (int ii=0; ii<12; ii++) {if (!mib_alloc_entry(&m_demo_oid, 0, ii, BER_TYPE_INTEGER)) return -1;}
+
+	for (int ii=4; ii<10; ii++) {if (!mib_alloc_entry(&m_demo_oid, 1, ii, BER_TYPE_INTEGER)) return -1;}
+
+	for (int ii=0; ii<2; ii++) {if (!mib_alloc_entry(&m_demo_oid, 2, ii, BER_TYPE_INTEGER)) return -1;}
+
+	for (int ii=0; ii<16; ii++) {if (!mib_alloc_entry(&m_democpu_oid, 0, ii, BER_TYPE_INTEGER)) return -1;}
+	for (int ii=0; ii<16; ii++) {if (!mib_alloc_entry(&m_democpu_oid, 1, ii, BER_TYPE_INTEGER)) return -1;}
+	for (int ii=0; ii<16; ii++) {if (!mib_alloc_entry(&m_democpu_oid, 2, ii, BER_TYPE_INTEGER)) return -1;}
+	for (int ii=0; ii<16; ii++) {if (!mib_alloc_entry(&m_democpu_oid, 3, ii, BER_TYPE_INTEGER)) return -1;}
+
+	for (int ii=0; ii<6; ii++) {if (!mib_alloc_entry(&m_demofan_oid, 2, ii, BER_TYPE_INTEGER)) return -1;}
+	for (int ii=0; ii<8; ii++) {if (!mib_alloc_entry(&m_demofan_oid, 3, ii, BER_TYPE_INTEGER)) return -1;}
+	for (int ii=0; ii<2; ii++) {if (!mib_alloc_entry(&m_demofan_oid, 4, ii, BER_TYPE_INTEGER)) return -1;}
+
+
+
+
+/**///#endif
 
 	return 0;
 }
@@ -1062,16 +1087,16 @@ int mib_update(int full)
 	char nr[16];
 	size_t i, pos;
 	union {
-		diskinfo_t diskinfo;
-		loadinfo_t loadinfo;
-		meminfo_t meminfo;
-		ipinfo_t ipinfo;
-		tcpinfo_t tcpinfo;
-		udpinfo_t udpinfo;
-		cpuinfo_t cpuinfo;
-#ifdef CONFIG_ENABLE_DEMO
+		/**///diskinfo_t diskinfo;
+		/**///loadinfo_t loadinfo;
+		/**///meminfo_t meminfo;
+		/**///ipinfo_t ipinfo;
+		/**///tcpinfo_t tcpinfo;
+		/**///udpinfo_t udpinfo;
+		/**///cpuinfo_t cpuinfo;
+/**///#ifdef CONFIG_ENABLE_DEMO
 		demoinfo_t demoinfo;
-#endif
+/**///#endif
 	} u;
 	netinfo_t netinfo;
 
@@ -1082,14 +1107,14 @@ int mib_update(int full)
 	 * The system MIB: basic info about the host (SNMPv2-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (mib_update_entry(&m_system_oid, 3, 0, &pos, BER_TYPE_TIME_TICKS, (const void *)(uintptr_t)get_process_uptime()) == -1)
-		return -1;
+	/**//*if (mib_update_entry(&m_system_oid, 3, 0, &pos, BER_TYPE_TIME_TICKS, (const void *)(uintptr_t)get_process_uptime()) == -1)
+		return -1;*/
 
 	/*
 	 * The interface MIB: network interfaces (IF-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (full) {
+	/**//*if (full) {
 		if (g_interface_list_length > 0) {
 			get_netinfo(&netinfo);
 
@@ -1174,12 +1199,13 @@ int mib_update(int full)
 					return -1;
 			}
 		}
-	}
+	}*/
+
 
 	/*
 	 * IP-MIB
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_ipinfo(&u.ipinfo);
 
 		if (update_int(&m_ip_oid,  1, 0, &pos, u.ipinfo.ipForwarding)   == -1 ||
@@ -1187,12 +1213,13 @@ int mib_update(int full)
 		    update_int(&m_ip_oid, 13, 0, &pos, u.ipinfo.ipReasmTimeout) == -1 )
 			return -1;
 
-	}
+	}*/
+
 
 	/*
 	 * TCP-MIB
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_tcpinfo(&u.tcpinfo);
 
 		if (update_int(&m_tcp_oid,  1, 0, &pos, u.tcpinfo.tcpRtoAlgorithm) == -1 ||
@@ -1210,12 +1237,13 @@ int mib_update(int full)
 		    update_cnt(&m_tcp_oid, 14, 0, &pos, u.tcpinfo.tcpInErrs)       == -1 ||
 		    update_cnt(&m_tcp_oid, 15, 0, &pos, u.tcpinfo.tcpOutRsts)      == -1)
 			return -1;
-	}
+	}*/
+
 
 	/*
 	 * UDP-MIB
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_udpinfo(&u.udpinfo);
 
 		if (update_cnt(&m_udp_oid,  1, 0, &pos, u.udpinfo.udpInDatagrams & 0xFFFFFFFF)  == -1 ||
@@ -1225,20 +1253,21 @@ int mib_update(int full)
 		    update_c64(&m_udp_oid,  8, 0, &pos, u.udpinfo.udpInDatagrams)               == -1 ||
 		    update_c64(&m_udp_oid,  9, 0, &pos, u.udpinfo.udpOutDatagrams)              == -1)
 			return -1;
-	}
+	}*/
+
 
 	/*
 	 * The host MIB: additional host info (HOST-RESOURCES-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (update_tm(&m_host_oid, 1, 0, &pos, get_system_uptime()) == -1)
-		return -1;
+	/**//*if (update_tm(&m_host_oid, 1, 0, &pos, get_system_uptime()) == -1)
+		return -1;*/
 
 	/*
 	 * IF-MIB
 	 * ifXTable
 	 */
-	if (full) {
+	/**//*if (full) {
 		if (g_interface_list_length > 0) {
 			long long val;
 
@@ -1325,7 +1354,7 @@ int mib_update(int full)
 
 #if 0 // Not yet supported
 			for (i = 0; i < g_interface_list_length; i++) {
-				int ifConnectorPresent = netinfo.is_port[i] ? 1 : 2; /* XXX: Add support for ethtool on Linux */
+				int ifConnectorPresent = netinfo.is_port[i] ? 1 : 2; /// XXX: Add support for ethtool on Linux 
 
 				if (update_int(&m_ifxtable_oid, 17, i + 1, &pos, ifConnectorPresent) == -1)
 					return -1;
@@ -1337,13 +1366,14 @@ int mib_update(int full)
 			}
 #endif
 		}
-	}
+	}*/
+
 
 	/*
 	 * The memory MIB: total/free memory (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_meminfo(&u.meminfo);
 		if (update_int(&m_memory_oid,  5, 0, &pos, u.meminfo.total)   == -1 ||
 		    update_int(&m_memory_oid,  6, 0, &pos, u.meminfo.free)    == -1 ||
@@ -1351,13 +1381,14 @@ int mib_update(int full)
 		    update_int(&m_memory_oid, 14, 0, &pos, u.meminfo.buffers) == -1 ||
 		    update_int(&m_memory_oid, 15, 0, &pos, u.meminfo.cached)  == -1)
 			return -1;
-	}
+	}*/
+
 
 	/*
 	 * The disk MIB: mounted partitions (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (full) {
+	/**//*if (full) {
 		if (g_disk_list_length > 0) {
 			get_diskinfo(&u.diskinfo);
 			for (i = 0; i < g_disk_list_length; i++) {
@@ -1385,13 +1416,14 @@ int mib_update(int full)
 					return -1;
 			}
 		}
-	}
+	}*/
+
 
 	/*
 	 * The load MIB: CPU load averages (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_loadinfo(&u.loadinfo);
 		for (i = 0; i < 3; i++) {
 			snprintf(nr, sizeof(nr), "%d.%02d", u.loadinfo.avg[i] / 100, u.loadinfo.avg[i] % 100);
@@ -1403,13 +1435,14 @@ int mib_update(int full)
 			if (update_int(&m_load_oid, 5, i + 1, &pos, u.loadinfo.avg[i]) == -1)
 				return -1;
 		}
-	}
+	}*/
+
 
 	/*
 	 * The cpu MIB: CPU statistics (UCD-SNMP-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	if (full) {
+	/**//*if (full) {
 		get_cpuinfo(&u.cpuinfo);
 		if (update_cnt(&m_cpu_oid, 50, 0, &pos, u.cpuinfo.user)   == -1 ||
 		    update_cnt(&m_cpu_oid, 51, 0, &pos, u.cpuinfo.nice)   == -1 ||
@@ -1418,7 +1451,8 @@ int mib_update(int full)
 		    update_cnt(&m_cpu_oid, 59, 0, &pos, u.cpuinfo.irqs)   == -1 ||
 		    update_cnt(&m_cpu_oid, 60, 0, &pos, u.cpuinfo.cntxts) == -1)
 			return -1;
-	}
+	}*/
+
 
 	/*
 	 * The demo MIB: two random integers (note: the random number is only
@@ -1426,14 +1460,46 @@ int mib_update(int full)
 	 * request, remove the enclosing "if" block).
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-#ifdef CONFIG_ENABLE_DEMO
+/**///#ifdef CONFIG_ENABLE_DEMO
 	if (full) {
+        int ii;
 		get_demoinfo(&u.demoinfo);
-		if (update_int(&m_demo_oid, 1, 0, &pos, u.demoinfo.random_value_1) == -1 ||
-		    update_int(&m_demo_oid, 2, 0, &pos, u.demoinfo.random_value_2) == -1)
-			return -1;
+		if (update_int(&m_demo_oid, 0, 0, &pos, u.demoinfo.value_P105_PCH_AUX) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 1, &pos, u.demoinfo.value_P12V_AUX) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 2, &pos, u.demoinfo.value_P1V8_PCH) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 3, &pos, u.demoinfo.value_PVNN_PCH_AUX) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 4, &pos, u.demoinfo.value_PVCCIN_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 5, &pos, u.demoinfo.value_PVCCIN_CPU2) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 6, &pos, u.demoinfo.value_PVCCIO_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 7, &pos, u.demoinfo.value_PVCCIO_CPU2) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 8, &pos, u.demoinfo.value_PVDQ_ABC_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 9, &pos, u.demoinfo.value_PVDQ_ABC_CPU2) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 10, &pos, u.demoinfo.value_PVDQ_DEF_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 0, 11, &pos, u.demoinfo.value_PVDQ_DEF_CPU2) == -1)	return -1;
+
+		if (update_int(&m_demo_oid, 1, 4, &pos, u.demoinfo.value_DTS_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 1, 5, &pos, u.demoinfo.value_DTS_CPU2) == -1)	return -1;
+		if (update_int(&m_demo_oid, 1, 6, &pos, u.demoinfo.value_Die_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 1, 7, &pos, u.demoinfo.value_Die_CPU2) == -1)	return -1;
+		if (update_int(&m_demo_oid, 1, 8, &pos, u.demoinfo.value_Power_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 1, 9, &pos, u.demoinfo.value_Power_CPU2) == -1)	return -1;
+
+		if (update_int(&m_demo_oid, 2, 0, &pos, u.demoinfo.value_Fan_CPU1) == -1)	return -1;
+		if (update_int(&m_demo_oid, 2, 1, &pos, u.demoinfo.value_Fan_CPU2) == -1)	return -1;
+
+        for (ii=0; ii<16; ii++)	{if (update_int(&m_democpu_oid, 0, ii, &pos, u.demoinfo.value_Core_CPU1[ii]) == -1)	return -1;}
+        for (ii=0; ii<16; ii++)	{if (update_int(&m_democpu_oid, 1, ii, &pos, u.demoinfo.value_Core_CPU2[ii]) == -1)	return -1;}
+        for (ii=0; ii<16; ii++)	{if (update_int(&m_democpu_oid, 2, ii, &pos, u.demoinfo.value_DIMM_CPU1[ii]) == -1)	return -1;}
+        for (ii=0; ii<16; ii++)	{if (update_int(&m_democpu_oid, 3, ii, &pos, u.demoinfo.value_DIMM_CPU2[ii]) == -1)	return -1;}
+
+        for (ii=0; ii<6; ii++)	{if (update_int(&m_demofan_oid, 2, ii, &pos, u.demoinfo.value_Fan_chassis[ii]) == -1)	return -1;}
+        for (ii=0; ii<8; ii++)	{if (update_int(&m_demofan_oid, 3, ii, &pos, u.demoinfo.value_Pwm[ii]) == -1)	return -1;}
+        for (ii=0; ii<2; ii++)	{if (update_int(&m_demofan_oid, 4, ii, &pos, u.demoinfo.value_temperature_Sensor[ii]) == -1)	return -1;}
+
+
+
 	}
-#endif
+/**///#endif
 
 	return 0;
 }

@@ -27,16 +27,21 @@
 #include <ctype.h>
 #include <time.h>
 
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 #include "riksnmp.h"
 
 void *allocate(size_t len)
 {
-	char *buf = malloc(len);
+	char *buf = (char *)malloc(len);
 	if (!buf) {
 		logit(LOG_DEBUG, errno, "Failed allocating memory");
 		return NULL;
 	}
-	return buf;
+	return (void *)buf;
 }
 
 static inline int parse_lineint(char *buf, field_t *f, size_t *skip_prefix)
@@ -343,18 +348,137 @@ int find_ifname(char *ifname)
 	return -1;
 }
 
-#ifdef CONFIG_ENABLE_DEMO
+//#ifdef CONFIG_ENABLE_DEMO
 void get_demoinfo(demoinfo_t *demoinfo)
 {
+    std::ifstream fileIn;
+    fileIn.open("/etc/mini-snmpd/period.txt", std::ios::in);
+    std::ofstream fileOut;
+    fileOut.open("/etc/mini-snmpd/result.txt", std::ios::out);
+    std::string   line;
+
+
+    int ii;
+
 	static int did_init = 0;
-	if (did_init == 0) {
-		srand(time(NULL));
-		did_init = 1;
-	}
-	demoinfo->random_value_1 = rand();
-	demoinfo->random_value_2 = rand();
+	if (did_init == 0) 
+    {
+	 demoinfo->value_P105_PCH_AUX = 1000;
+	 demoinfo->value_P12V_AUX = 1001;
+	 demoinfo->value_P1V8_PCH = 1002;
+	 demoinfo->value_PVNN_PCH_AUX = 1003;
+	 demoinfo->value_PVCCIN_CPU1 = 1004;
+	 demoinfo->value_PVCCIN_CPU2 = 1005;
+	 demoinfo->value_PVCCIO_CPU1 = 1006;
+	 demoinfo->value_PVCCIO_CPU2 = 1007;
+	 demoinfo->value_PVDQ_ABC_CPU1 = 1008;
+	 demoinfo->value_PVDQ_ABC_CPU2 = 1009;
+	 demoinfo->value_PVDQ_DEF_CPU1 = 1010;
+	 demoinfo->value_PVDQ_DEF_CPU2 = 1011;
+
+	 demoinfo->value_DTS_CPU1 = 114;
+	 demoinfo->value_DTS_CPU2 = 115;
+	 demoinfo->value_Die_CPU1 = 116;
+	 demoinfo->value_Die_CPU2 = 117;
+	 demoinfo->value_Power_CPU1 = 118;
+	 demoinfo->value_Power_CPU2 = 119;
+
+     demoinfo->value_Fan_CPU1 = 120;
+     demoinfo->value_Fan_CPU2 = 121;
+
+     for (ii=0; ii<16; ii++)	{demoinfo->value_Core_CPU1[ii] = 11000+ii;}
+     for (ii=0; ii<16; ii++)	{demoinfo->value_Core_CPU2[ii] = 11100+ii;}
+     for (ii=0; ii<16; ii++)	{demoinfo->value_DIMM_CPU1[ii] = 11200+ii;}
+     for (ii=0; ii<16; ii++)	{demoinfo->value_DIMM_CPU2[ii] = 11300+ii;}
+
+     for (ii=0; ii<6; ii++)	{demoinfo->value_Fan_chassis[ii] = 1220+ii;}
+     for (ii=0; ii<8; ii++)	{demoinfo->value_Pwm[ii] = 1230+ii;}
+     for (ii=0; ii<2; ii++)	{demoinfo->value_temperature_Sensor[ii] = 1240+ii;}
+
+     did_init=1; 
+    }
+
+
+    std::getline(fileIn, line);
+    while (std::getline(fileIn, line)) {
+        fileOut << "line: " << line << " ";
+        unsigned int a,b;
+        float e,f;
+		std::stringstream   linestream(line);
+		std::string         data;
+		int                 val1;
+		int                 val2;
+        std::getline(linestream, data, ' ');
+        linestream >> b;
+        fileOut << "data: " << data[0] << " ";
+        fileOut << "a=" << a << " ";
+		if (data[0]=='0')
+        {
+		    std::getline(linestream, data, ' ');
+		    linestream >> e;
+	        fileOut << "b=" << b << " ";
+		    //std::getline(linestream, data, ' ');
+		    //linestream >> e;
+	        fileOut << "e=" << e << "\n";
+            if (b==0) demoinfo->value_P105_PCH_AUX = (unsigned int)(e*100);
+            if (b==1) demoinfo->value_P12V_AUX = (unsigned int)(e*100);
+            if (b==2) demoinfo->value_P1V8_PCH = (unsigned int)(e*100);
+            if (b==3) demoinfo->value_PVNN_PCH_AUX = (unsigned int)(e*100);
+            if (b==4) demoinfo->value_PVCCIN_CPU1 = (unsigned int)(e*100);
+            if (b==5) demoinfo->value_PVCCIN_CPU2 = (unsigned int)(e*100);
+            if (b==6) demoinfo->value_PVCCIO_CPU1 = (unsigned int)(e*100);
+            if (b==7) demoinfo->value_PVCCIO_CPU2 = (unsigned int)(e*100);
+            if (b==8) demoinfo->value_PVDQ_ABC_CPU1 = (unsigned int)(e*100);
+            if (b==9) demoinfo->value_PVDQ_ABC_CPU2 = (unsigned int)(e*100);
+            if (b==10) demoinfo->value_PVDQ_DEF_CPU1 = (unsigned int)(e*100);
+            if (b==11) demoinfo->value_PVDQ_DEF_CPU2 = (unsigned int)(e*100);
+        }
+		if (data[0]=='1')
+        {
+		    std::getline(linestream, data, ' ');
+		    linestream >> e;
+	        fileOut << "b=" << b << " ";
+		    //std::getline(linestream, data, ' ');
+		    //linestream >> e;
+	        fileOut << "e=" << e << "\n";
+            if (b==4) demoinfo->value_DTS_CPU1 = (unsigned int)(e);
+            if (b==5) demoinfo->value_DTS_CPU2 = (unsigned int)(e);
+            if (b==6) demoinfo->value_Die_CPU1 = (unsigned int)(e);
+            if (b==7) demoinfo->value_Die_CPU2 = (unsigned int)(e);
+            if (b==8) demoinfo->value_Power_CPU1 = (unsigned int)(e);
+            if (b==9) demoinfo->value_Power_CPU2 = (unsigned int)(e);
+            if (b < 4)
+            {
+              if (b==0) demoinfo->value_Core_CPU1[((int)(e))-1] = (unsigned int)(f);
+              if (b==1) demoinfo->value_Core_CPU2[((int)(e))-1] = (unsigned int)(f);
+              if (b==2) demoinfo->value_DIMM_CPU1[((int)(e))-1] = (unsigned int)(f);
+              if (b==3) demoinfo->value_DIMM_CPU2[((int)(e))-1] = (unsigned int)(f);
+            }
+        }
+		if (data[0]=='2')
+        {
+		    std::getline(linestream, data, ' ');
+		    linestream >> e;
+	        fileOut << "b=" << b << " ";
+		    //std::getline(linestream, data, ' ');
+		    //linestream >> e;
+	        fileOut << "e=" << e << "\n";
+            if (b==0) demoinfo->value_Fan_CPU1 = (unsigned int)(e);
+            if (b==1) demoinfo->value_Fan_CPU2 = (unsigned int)(e);
+            if (b > 1)
+            {
+              if (b==2) demoinfo->value_Fan_chassis[((int)(e))-1] = (unsigned int)(f);
+              if (b==3) demoinfo->value_Pwm[((int)(e))-1] = (unsigned int)(f);
+              if (b==4) demoinfo->value_temperature_Sensor[((int)(e))-1] = (unsigned int)(f);
+            }
+        }
+        /**/if (a>2) fileOut << "error\n";
+    }
+
+	fileIn.close();
+	fileOut.close();
 }
-#endif
+//#endif
 
 int logit(int priority, int syserr, const char *fmt, ...)
 {
@@ -370,7 +494,7 @@ int logit(int priority, int syserr, const char *fmt, ...)
 		return -1;
 	// length of ": error-message"
 	len += 3 + (syserr > 0 ? strlen(strerror(syserr)) : 0);
-	buf = alloca(len);
+	buf = (char *)alloca(len);
 	if (!buf)
 		return -1;
 	va_start(ap, fmt);

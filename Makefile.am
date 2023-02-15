@@ -4,11 +4,15 @@ doc_DATA              = README.md COPYING
 sbin_PROGRAMS         = $(EXEC)
 AM_CPPFLAGS           = -DSYSCONFDIR=\"@sysconfdir@\" -DRUNSTATEDIR=\"@runstatedir@\"
 
-riksnmp_SOURCES    = riksnmp.c riksnmp.h linux.c mib.c	\
-			globals.c protocol.c utils.c compat.h
+riksnmp_SOURCES    = riksnmp.cpp riksnmp.h linux.c mib.c	\
+			globals.c protocol.c utils.cpp compat.h
 riksnmp_CPPFLAGS   = $(AM_CPPFLAGS)
 riksnmp_CFLAGS     = -W -Wall -Wextra -std=gnu99
 riksnmp_LDADD      = $(LIBS) $(LIBOBJS)
+riksnmp_CFLAGS    += $(libsystemd_CFLAGS)
+riksnmp_LDADD     += $(libsystemd_LIBS)
+riksnmp_CFLAGS    += $(libsdbusplus_CFLAGS)
+riksnmp_LDADD     += $(libsdbusplus_LIBS)
 
 if HAVE_SYSTEMD
 systemd_DATA          = riksnmp.service

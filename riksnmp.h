@@ -265,12 +265,40 @@ typedef struct udpinfo_s {
 	long long udpOutDatagrams;
 } udpinfo_t;
 
-#ifdef CONFIG_ENABLE_DEMO
+/**///#ifdef CONFIG_ENABLE_DEMO
 typedef struct demoinfo_s {
-	unsigned int random_value_1;
-	unsigned int random_value_2;
+	unsigned int value_P105_PCH_AUX;
+	unsigned int value_P12V_AUX;
+	unsigned int value_P1V8_PCH;
+	unsigned int value_PVNN_PCH_AUX;
+	unsigned int value_PVCCIN_CPU1;
+	unsigned int value_PVCCIN_CPU2;
+	unsigned int value_PVCCIO_CPU1;
+	unsigned int value_PVCCIO_CPU2;
+	unsigned int value_PVDQ_ABC_CPU1;
+	unsigned int value_PVDQ_ABC_CPU2;
+	unsigned int value_PVDQ_DEF_CPU1;
+	unsigned int value_PVDQ_DEF_CPU2;
+
+	unsigned int value_Core_CPU1[16];
+	unsigned int value_Core_CPU2[16];
+	unsigned int value_DIMM_CPU1[16];
+	unsigned int value_DIMM_CPU2[16];
+	unsigned int value_DTS_CPU1;
+	unsigned int value_DTS_CPU2;
+	unsigned int value_Die_CPU1;
+	unsigned int value_Die_CPU2;
+	unsigned int value_Power_CPU1;
+	unsigned int value_Power_CPU2;
+
+	unsigned int value_Fan_CPU1;
+	unsigned int value_Fan_CPU2;
+	unsigned int value_Fan_chassis[6];
+
+	unsigned int value_Pwm[8];
+	unsigned int value_temperature_Sensor[2];
 } demoinfo_t;
-#endif
+/**///#endif
 
 
 /*
@@ -319,6 +347,10 @@ extern size_t    g_mib_length;
  * Functions
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void         dump_packet   (const client_t   *client);
 void         dump_mib      (const value_t    *value, int size);
 void         dump_response (const response_t *response);
@@ -357,9 +389,9 @@ void         get_tcpinfo        (tcpinfo_t *tcpinfo);
 void         get_udpinfo        (udpinfo_t *udpinfo);
 void         get_diskinfo       (diskinfo_t *diskinfo);
 void         get_netinfo        (netinfo_t *netinfo);
-#ifdef CONFIG_ENABLE_DEMO
+/**///#ifdef CONFIG_ENABLE_DEMO
 void         get_demoinfo       (demoinfo_t *demoinfo);
-#endif
+/**///#endif
 int          logit              (int priority, int syserr, const char *fmt, ...);
 
 int snmp_packet_complete   (const client_t *client);
@@ -371,6 +403,10 @@ int mib_update   (int full);
 
 value_t *mib_find     (const oid_t *oid, size_t *pos);
 value_t *mib_findnext (const oid_t *oid);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIKSNMP_H_ */
 

@@ -4,18 +4,16 @@ AC_CONFIG_AUX_DIR(aux)
 AM_INIT_AUTOMAKE([1.11 foreign subdir-objects])
 AM_SILENT_RULES([yes])
 
-AC_CONFIG_SRCDIR([riksnmp.c])
+AC_CONFIG_SRCDIR([riksnmp.cpp])
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_FILES([Makefile riksnmp.service])
 
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_INSTALL
 
 # Check for required packages: systemd
 PKG_PROG_PKG_CONFIG
-
-# Check for usually missing API's, which we can replace
-AC_CONFIG_LIBOBJ_DIR([lib])
 
 # Check for other library functions
 AC_CHECK_FUNCS([getprogname])
