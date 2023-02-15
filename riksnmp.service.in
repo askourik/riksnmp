@@ -1,0 +1,14 @@
+[Unit]
+Description=Mini SNMP service
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/default/riksnmp
+Type=simple
+ExecStart=@SBINDIR@/riksnmp -ns $DAEMON_OPTS
+StandardOutput=null
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
