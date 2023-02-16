@@ -20,7 +20,7 @@ add_definitions(-DBOOST_ASIO_DISABLE_THREADS)
 
 
 set(SRC_FILES 
-    mini-snmpd.cpp
+    riksnmp.cpp
     utils.cpp
     linux.c 
     mib.c 
