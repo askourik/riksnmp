@@ -93,6 +93,15 @@
 #define SNMP_STATUS_NOT_WRITABLE                        17
 #define SNMP_STATUS_INCONSISTENT_NAME                   18
 
+/**/
+#define PACKAGE_NAME "riksnmp"
+#define PACKAGE_TARNAME "riksnmp"
+#define PACKAGE_VERSION "1.6"
+#define PACKAGE_STRING "riksnmp 1.6"
+#define PACKAGE_BUGREPORT "https://github.com/troglobit/mini-snmpd/issues"
+#define PACKAGE_URL "https://troglobit.com/projects/mini-snmpd/"
+/**/
+	
 #define PROGRAM_IDENT PACKAGE_NAME " v" PACKAGE_VERSION
 
 #ifndef CONFIG_ENABLE_IPV6
