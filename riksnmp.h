@@ -100,6 +100,7 @@
 #define PACKAGE_STRING "riksnmp 1.6"
 #define PACKAGE_BUGREPORT "https://github.com/troglobit/mini-snmpd/issues"
 #define PACKAGE_URL "https://troglobit.com/projects/mini-snmpd/"
+#define VENDOR ".1.3.6.1.4.1"
 /**/
 	
 #define PROGRAM_IDENT PACKAGE_NAME " v" PACKAGE_VERSION
