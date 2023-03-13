@@ -1,0 +1,10 @@
+[Unit]
+Description=Logs some system statistics to the systemd journal
+Requires=riksnmp-timer.service
+
+[Timer]
+Unit=riksnmp-timer.service
+OnCalendar=*:0/5
+
+[Install]
+WantedBy=timers.target

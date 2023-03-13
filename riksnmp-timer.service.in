@@ -1,0 +1,10 @@
+[Unit]
+Description=Logs system statistics to the systemd journal
+Wants=riksnmp.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/mailnew.sh /etc/riksnmp
+
+[Install]
+WantedBy=multi-user.target
