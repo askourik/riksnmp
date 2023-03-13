@@ -99,7 +99,8 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = riksnmp.service
+CONFIG_CLEAN_FILES = riksnmp.service riksnmp-timer.service \
+	riksnmp.timer
 CONFIG_CLEAN_VPATH_FILES =
 am__EXEEXT_1 = riksnmp$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(docdir)" \
@@ -218,10 +219,12 @@ CTAGS = ctags
 CSCOPE = cscope
 AM_RECURSIVE_TARGETS = cscope
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/riksnmp.service.in $(top_srcdir)/aux/compile \
-	$(top_srcdir)/aux/depcomp $(top_srcdir)/aux/install-sh \
-	$(top_srcdir)/aux/missing AUTHORS COPYING TODO aux/compile \
-	aux/depcomp aux/install-sh aux/missing
+	$(srcdir)/riksnmp-timer.service.in \
+	$(srcdir)/riksnmp.service.in $(srcdir)/riksnmp.timer.in \
+	$(top_srcdir)/aux/compile $(top_srcdir)/aux/depcomp \
+	$(top_srcdir)/aux/install-sh $(top_srcdir)/aux/missing AUTHORS \
+	COPYING TODO aux/compile aux/depcomp aux/install-sh \
+	aux/missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -408,6 +411,10 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 distclean-hdr:
 	-rm -f config.h stamp-h1
 riksnmp.service: $(top_builddir)/config.status $(srcdir)/riksnmp.service.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+riksnmp-timer.service: $(top_builddir)/config.status $(srcdir)/riksnmp-timer.service.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+riksnmp.timer: $(top_builddir)/config.status $(srcdir)/riksnmp.timer.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 install-sbinPROGRAMS: $(sbin_PROGRAMS)
 	@$(NORMAL_INSTALL)
