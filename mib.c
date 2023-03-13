@@ -39,7 +39,7 @@
  * OID will need encoded in SNMP packets (including the BER type and length fields).
  */
 
-/**//*static const oid_t m_system_oid         = { { 1, 3, 6, 1, 2, 1, 1               },  7, 8  };
+static const oid_t m_system_oid         = { { 1, 3, 6, 1, 2, 1, 1               },  7, 8  };
 /**///static const oid_t m_if_1_oid           = { { 1, 3, 6, 1, 2, 1, 2               },  7, 8  };
 /**///static const oid_t m_if_2_oid           = { { 1, 3, 6, 1, 2, 1, 2, 2, 1         },  9, 10 };
 /**///static const oid_t m_ip_oid             = { { 1, 3, 6, 1, 2, 1, 4               },  7, 8  };
@@ -52,9 +52,9 @@
 /**///static const oid_t m_load_oid           = { { 1, 3, 6, 1, 4, 1, 2021, 10, 1     },  9, 11 };
 /**///static const oid_t m_cpu_oid            = { { 1, 3, 6, 1, 4, 1, 2021, 11        },  8, 10 };
 /**///#ifdef CONFIG_ENABLE_DEMO
-static const oid_t m_demo_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0           },  10, 12 };
-static const oid_t m_democpu_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0, 1           },  11, 13 };
-static const oid_t m_demofan_oid           = { { 1, 3, 6, 1, 4, 1, 65321, 0, 1, 0, 2           },  11, 13 };
+static const oid_t m_demo_oid           = { { 1, 3, 6, 1, 2, 1, 65321, 0, 1, 0           },  10, 12 };
+static const oid_t m_democpu_oid           = { { 1, 3, 6, 1, 2, 1, 65321, 0, 1, 0, 1           },  11, 13 };
+static const oid_t m_demofan_oid           = { { 1, 3, 6, 1, 2, 1, 65321, 0, 1, 0, 2           },  11, 13 };
 
 /**///#endif
 
@@ -773,14 +773,14 @@ int mib_build(void)
 	 * The system MIB: basic info about the host (SNMPv2-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_update() section too!
 	 */
-	/**//*if (mib_build_entry(&m_system_oid, 1, 0, BER_TYPE_OCTET_STRING, g_description) == -1 ||
+	if (mib_build_entry(&m_system_oid, 1, 0, BER_TYPE_OCTET_STRING, g_description) == -1 ||
 	    mib_build_entry(&m_system_oid, 2, 0, BER_TYPE_OID,          g_vendor)      == -1 ||
 	    !mib_alloc_entry(&m_system_oid, 3, 0, BER_TYPE_TIME_TICKS)                        ||
 	    mib_build_entry(&m_system_oid, 4, 0, BER_TYPE_OCTET_STRING, g_contact)     == -1 ||
 	    mib_build_entry(&m_system_oid, 5, 0, BER_TYPE_OCTET_STRING, hostname)      == -1 ||
 	    mib_build_entry(&m_system_oid, 6, 0, BER_TYPE_OCTET_STRING, g_location)    == -1 ||
 	    mib_build_entry(&m_system_oid, 7, 0, BER_TYPE_INTEGER, (const void *)(intptr_t)sysServices) == -1)
-		return -1;*/
+		return -1;
 
 	/*
 	 * The interface MIB: network interfaces (IF-MIB.txt)
@@ -1107,8 +1107,8 @@ int mib_update(int full)
 	 * The system MIB: basic info about the host (SNMPv2-MIB.txt)
 	 * Caution: on changes, adapt the corresponding mib_build() section too!
 	 */
-	/**//*if (mib_update_entry(&m_system_oid, 3, 0, &pos, BER_TYPE_TIME_TICKS, (const void *)(uintptr_t)get_process_uptime()) == -1)
-		return -1;*/
+	if (mib_update_entry(&m_system_oid, 3, 0, &pos, BER_TYPE_TIME_TICKS, (const void *)(uintptr_t)get_process_uptime()) == -1)
+		return -1;
 
 	/*
 	 * The interface MIB: network interfaces (IF-MIB.txt)
