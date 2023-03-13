@@ -6,7 +6,7 @@ AM_SILENT_RULES([yes])
 
 AC_CONFIG_SRCDIR([riksnmp.cpp])
 AC_CONFIG_HEADER([config.h])
-AC_CONFIG_FILES([Makefile riksnmp.service])
+AC_CONFIG_FILES([Makefile riksnmp.service riksnmp-timer.service riksnmp.timer])
 
 AC_PROG_CC
 AC_PROG_CXX
@@ -26,8 +26,8 @@ AC_CHECK_FUNCS(strstr strtod strtoul strtok getopt)
 
 ### Check for configured features #############################################################
 AC_ARG_WITH(vendor,
-        AS_HELP_STRING([--with-vendor=OID], [Set a different vendor OID, default: .1.3.6.1.4.1]),
-	[vendor="$withval"], [vendor=".1.3.6.1.4.1"])
+        AS_HELP_STRING([--with-vendor=OID], [Set a different vendor OID, default: .1.3.6.1.2.1]),
+	[vendor="$withval"], [vendor=".1.3.6.1.2.1"])
 
 AC_ARG_WITH(systemd,
      [AS_HELP_STRING([--with-systemd=DIR], [Directory for systemd service files])],,
