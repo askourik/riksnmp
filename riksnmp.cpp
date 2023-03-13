@@ -35,15 +35,15 @@
 #include <grp.h>
 
 #include "riksnmp.h"
-#include <boost/asio.hpp>
-#include <sdbusplus/asio/connection.hpp>
-#include <sdbusplus/asio/object_server.hpp>
+//#include <boost/asio.hpp>
+//#include <sdbusplus/asio/connection.hpp>
+//#include <sdbusplus/asio/object_server.hpp>
 //#include <sdbusplus/asio/property.hpp>
-#include <sdbusplus/bus.hpp>
+//#include <sdbusplus/bus.hpp>
 //#include <sdbusplus/unpack_properties.hpp>
 
 #include <iostream>
-
+/*
 class Application
 {
   public:
@@ -240,7 +240,7 @@ const std::string demoInterfaceName = "xyz.demo";
 const std::string propertyGrettingName = "Greetings";
 const std::string propertyGoodbyesName = "Goodbyes";
 const std::string propertyValueName = "Value";
-
+*/
 static int usage(int rc)
 {
 	printf("Usage: %s [options]\n"
